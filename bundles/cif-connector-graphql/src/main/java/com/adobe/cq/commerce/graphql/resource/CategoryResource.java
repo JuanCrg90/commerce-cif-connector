@@ -22,6 +22,8 @@ import org.apache.sling.api.resource.SyntheticResource;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.api.wrappers.DeepReadValueMapDecorator;
 import org.apache.sling.jcr.resource.api.JcrResourceConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.adobe.cq.commerce.api.CommerceConstants;
 import com.adobe.cq.commerce.api.Product;
@@ -33,8 +35,11 @@ import static com.adobe.cq.commerce.graphql.resource.Constants.CATEGORY;
 import static com.adobe.cq.commerce.graphql.resource.Constants.CIF_ID;
 import static com.adobe.cq.commerce.graphql.resource.Constants.LEAF_CATEGORY;
 import static com.adobe.cq.commerce.graphql.resource.Constants.MAGENTO_GRAPHQL_PROVIDER;
+import static com.adobe.cq.commerce.graphql.resource.Constants.URL_KEY;
+import static com.adobe.cq.commerce.graphql.resource.Constants.URL_PATH;
 
 class CategoryResource extends SyntheticResource {
+    private static final Logger LOG = LoggerFactory.getLogger(CategoryResource.class);
 
     private ValueMap values;
 
@@ -56,6 +61,8 @@ class CategoryResource extends SyntheticResource {
         if (category != null) {
             map.put(JcrConstants.JCR_TITLE, category.getName());
             map.put(CIF_ID, category.getId());
+            map.put(URL_PATH, category.getUrlPath());
+            map.put(URL_KEY, category.getUrlKey());
             if (category.getChildren() == null || category.getChildren().isEmpty()) {
                 map.put(LEAF_CATEGORY, true);
             } else {

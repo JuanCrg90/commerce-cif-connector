@@ -74,6 +74,7 @@ class GraphqlQueries {
         .id()
         .name()
         .urlPath()
+        .urlKey()
         .productCount()
         .childrenCount();
 }
